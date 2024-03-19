@@ -1,3 +1,4 @@
+/* eslint-disable import/no-extraneous-dependencies */
 // connect to mysql
 require('dotenv').config();
 const mysql = require('mysql2');
