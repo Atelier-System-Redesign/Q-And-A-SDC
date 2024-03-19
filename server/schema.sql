@@ -3,12 +3,10 @@ CREATE DATABASE qanda;
 USE qanda;
 
 CREATE TABLE products (
-  id INT NOT NULL AUTO_INCREMENT,
   product_id INT PRIMARY KEY
 );
 
 CREATE TABLE questions (
-  id INT NOT NULL AUTO_INCREMENT,
   question_id INT PRIMARY KEY,
   product_id INT,
   question_body TEXT,
@@ -20,7 +18,6 @@ CREATE TABLE questions (
 );
 
 CREATE TABLE answers (
-  id INT NOT NULL AUTO_INCREMENT,
   answer_id INT PRIMARY KEY,
   question_id INT,
   body TEXT,
@@ -32,7 +29,6 @@ CREATE TABLE answers (
 );
 
 CREATE TABLE photos (
-  id INT NOT NULL AUTO_INCREMENT,
   photo_id BIGINT PRIMARY KEY,
   answer_id INT,
   photo_url TEXT,
