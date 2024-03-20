@@ -2,6 +2,7 @@
 // connect to mysql
 require('dotenv').config();
 const mysql = require('mysql2');
+const { formatDateTime } = require('./helpers/dateTimeUtils');
 
 const connection = mysql.createConnection({
   host: process.env.DB_HOST,
@@ -11,11 +12,6 @@ const connection = mysql.createConnection({
 });
 
 connection.connect();
-
-function formatDateTime(dateTimeString) {
-  const date = new Date(dateTimeString);
-  return date.toISOString().slice(0, 19).replace('T', ' ');
-}
 
 for (let i = 0; i <= 100; i += 1) {
   const seedProduct = {
