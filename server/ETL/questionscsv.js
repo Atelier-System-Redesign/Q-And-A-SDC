@@ -1,3 +1,4 @@
+/* eslint-disable import/no-extraneous-dependencies */
 /* eslint-disable no-console */
 const fs = require('fs');
 const fastCsv = require('fast-csv');
@@ -16,13 +17,13 @@ const transformStream = new Transform({
   transform(chunk, encoding, callback) {
     try {
       const row = {
-        id: parseInt(chunk.id),
-        product_id: parseInt(chunk.product_id),
+        id: parseInt(chunk.id, 10),
+        product_id: parseInt(chunk.product_id, 10),
         body: chunk.body,
-        date_written: parseInt(chunk.date_written),
+        date_written: parseInt(chunk.date_written, 10),
         asker_name: chunk.asker_name,
-        reported: parseInt(chunk.reported),
-        helpful: parseInt(chunk.helpful),
+        reported: parseInt(chunk.reported, 10),
+        helpful: parseInt(chunk.helpful, 10),
       };
       callback(null, row);
     } catch (error) {
