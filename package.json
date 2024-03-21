@@ -7,7 +7,10 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "server-dev": "npx nodemon --watch server server/index.js",
     "seed": "node server/seed.js",
-    "migrate-questions": "node server/ETL/questionscsv.js"
+    "db-connect": "node connection.js",
+    "migrate-questions": "node server/ETL/questionscsv.js",
+    "migrate-answers": "node server/ETL/answersCsv.js",
+    "migrate-photos": "node server/ETL/answersPhotosCsv.js"
   },
   "repository": {
     "type": "git",
