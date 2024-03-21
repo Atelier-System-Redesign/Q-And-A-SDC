@@ -7,8 +7,8 @@ const fs = require('fs');
 const copyFrom = require('pg-copy-streams').from;
 const createClient = require('../../db/database.js');
 
-const path = 'server/ETL/transformed_questions.csv';
-const table = 'questions';
+const path = 'server/ETL/transformed_answers.csv';
+const table = 'answers';
 
 async function importDataFromCSV(filePath, tableName) {
   const client = createClient();

@@ -1,5 +1,5 @@
 /* eslint-disable no-console */
-const db = require('../../db/database.js');
+// const db = require('../../db/database.js');
 
 module.exports = async (productId) => {
   console.log('productId in models: ', productId);
