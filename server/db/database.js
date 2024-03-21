@@ -1,19 +1,5 @@
+/* eslint-disable no-console */
 /* eslint-disable import/no-extraneous-dependencies */
-// connect to mysql
-// require('dotenv').config();
-// const mysql = require('mysql2');
-
-// const connection = mysql.createConnection({
-//   host: process.env.DB_HOST,
-//   user: process.env.DB_USER,
-//   password: process.env.DB_PASS,
-//   database: process.env.DB_NAME,
-// });
-
-// connection.connect();
-
-// module.exports = connection;
-
 require('dotenv').config();
 const { Client } = require('pg');
 
