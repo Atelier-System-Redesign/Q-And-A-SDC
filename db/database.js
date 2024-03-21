@@ -10,8 +10,9 @@ const createTablesQuery = `
     question_body TEXT,
     question_date TIMESTAMP,
     asker_name VARCHAR(255),
-    question_helpfulness INT,
-    reported BOOLEAN
+    asker_email VARCHAR(255),
+    reported BOOLEAN,
+    question_helpfulness INT
   );
 
   CREATE TABLE answers (
@@ -20,8 +21,9 @@ const createTablesQuery = `
     body TEXT,
     date TIMESTAMP,
     answerer_name VARCHAR(255),
-    helpfulness INT,
+    answerer_email VARCHAR(255),
     answer_reported BOOLEAN,
+    helpfulness INT,
     FOREIGN KEY (question_id) REFERENCES questions(question_id)
   );
 
