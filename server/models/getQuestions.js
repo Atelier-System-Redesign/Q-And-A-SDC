@@ -5,19 +5,8 @@ module.exports = async (productId) => {
   console.log('productId in models: ', productId);
   try {
     const query = `
-    SELECT
-    q.question_id,
-    q.question_body,
-    q.question_date,
-    q.asker_name,
-    q.question_helpfulness,
-    q.reported,
-    JSON_OBJECT(
-      'answers', q_answers.answers
-    ) AS answers
-  FROM questions q
-  LEFT JOIN (
-    SELECT
+    WITH answers_list AS (
+      SELECT
       a.question_id,
       JSON_ARRAYAGG(
         JSON_OBJECT(
@@ -38,7 +27,20 @@ module.exports = async (productId) => {
       GROUP BY answer_id
     ) AS photos ON a.answer_id = photos.answer_id
     GROUP BY a.question_id
-  ) AS q_answers ON q.question_id = q_answers.question_id
+    )
+
+    SELECT
+    q.question_id,
+    q.question_body,
+    q.question_date,
+    q.asker_name,
+    q.question_helpfulness,
+    q.reported,
+    JSON_OBJECT(
+      'answers', q_answers.answers
+    ) AS answers
+  FROM questions q
+  LEFT JOIN answers_list AS q_answers ON q.question_id = q_answers.question_id
   WHERE q.product_id = ?
     `;
     const [rows] = await db.promise().query(query, [productId]);

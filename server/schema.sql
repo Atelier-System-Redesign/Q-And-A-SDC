@@ -2,10 +2,6 @@ CREATE DATABASE qanda;
 
 USE qanda;
 
-CREATE TABLE products (
-  product_id INT PRIMARY KEY
-);
-
 CREATE TABLE questions (
   question_id INT PRIMARY KEY,
   product_id INT,
@@ -14,7 +10,7 @@ CREATE TABLE questions (
   asker_name VARCHAR(255),
   question_helpfulness INT,
   reported TINYINT,
-  FOREIGN KEY (product_id) REFERENCES products(product_id)
+  INDEX idx_product_id (product_id)
 );
 
 CREATE TABLE answers (
