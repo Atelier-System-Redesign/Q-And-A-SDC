@@ -7,9 +7,11 @@ const fastCsv = require('fast-csv');
 // const db = require('../db/database.js').promise();
 const { formatDateTime } = require('../helpers/dateTimeUtils');
 
-const stream = fs.createReadStream('server/ETL/answers.csv');
+const stream = fs.createReadStream('server/ETL/questions.csv');
 
-const outputStream = fs.createWriteStream('server/ETL/transformed_answers.csv');
+const outputStream = fs.createWriteStream('server/ETL/transformed_questions.csv');
+
+let rowCount = 0;
 
 stream.pipe(fastCsv.parse({ headers: true }))
   .on('error', (error) => {
@@ -19,6 +21,8 @@ stream.pipe(fastCsv.parse({ headers: true }))
     const originalDate = parseInt(row.date_written, 10);
     const formattedDate = formatDateTime(originalDate);
     row.date_written = formattedDate;
+    rowCount += 1;
+    console.log(`Formatted ${rowCount} rows`);
     cb(null, row);
   })
   .pipe(fastCsv.format({ headers: true }))
