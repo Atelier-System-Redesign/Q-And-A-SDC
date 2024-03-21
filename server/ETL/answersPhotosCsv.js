@@ -7,8 +7,8 @@ const fs = require('fs');
 const copyFrom = require('pg-copy-streams').from;
 const createClient = require('../../db/database.js');
 
-const path = 'server/ETL/transformed_questions.csv';
-const table = 'questions';
+const path = 'server/ETL/answers_photos.csv';
+const table = 'photos';
 
 async function importDataFromCSV(filePath, tableName) {
   const client = createClient();
@@ -22,6 +22,10 @@ async function importDataFromCSV(filePath, tableName) {
     fileStream.on('error', (error) => {
       console.error('Error reading file: ', error);
       client.end();
+    });
+
+    fileStream.on('end', () => {
+      console.log(`Data loaded into ${tableName} successfully`);
     });
 
     stream.on('error', (error) => {
