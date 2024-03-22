@@ -2,13 +2,12 @@
 const { getQuestions } = require('../models');
 
 module.exports = async (req, res) => {
-  console.log('req.query in controllers: ', req.query);
   try {
-    const productId = req.query.product_id;
+    const productId = parseInt(req.query.product_id, 10);
     const questions = await getQuestions(productId);
-    res.status(200).json(questions);
+    res.status(200).send(questions);
   } catch (error) {
     console.error('Error retrieving questions: ', error);
-    res.status(500).json({ error: 'Internal server error' });
+    res.status(500).send({ error: 'Internal server error' });
   }
 };
