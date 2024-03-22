@@ -24,6 +24,10 @@ async function importDataFromCSV(filePath, tableName) {
       client.end();
     });
 
+    fileStream.on('end', () => {
+      console.log(`Data loaded into ${tableName} successfully`);
+    });
+
     stream.on('error', (error) => {
       console.error('Error executing COPY command: ', error);
       client.end();
