@@ -23,6 +23,10 @@ app.use(express.json());
 // Set up routes
 app.use('/qa', router);
 
+app.get('/', (req, res) => {
+  res.send('Welcome to the home page');
+});
+
 app.listen(port, () => {
   console.log(`Listening at port: ${port}`);
 });
