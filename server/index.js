@@ -2,7 +2,7 @@
 /* eslint-disable no-console */
 require('dotenv').config();
 const express = require('express');
-// const path = require('path');
+const path = require('path');
 
 // Middleware
 const morgan = require('morgan');
@@ -19,6 +19,9 @@ const port = 3000 || process.env.PORT;
 app.use(morgan('dev'));
 app.use(cors());
 app.use(express.json());
+
+const staticFilePath = path.join(__dirname, '..', 'public');
+app.use(express.static(staticFilePath));
 
 // Set up routes
 app.use('/qa', router);
