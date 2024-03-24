@@ -34,6 +34,10 @@ const createTablesQuery = `
     FOREIGN KEY (answer_id) REFERENCES answers(answer_id)
   );
 
+  CREATE INDEX idx_product_id ON questions (product_id);
+  CREATE INDEX idx_question_id ON answers (question_id);
+  CREATE INDEX idx_answer_id ON photos (answer_id);
+
 `;
 
 client.connect()
@@ -59,6 +63,3 @@ client.connect()
   .finally(() => {
     client.end();
   });
-
-// CREATE INDEX idx_product_id ON questions (product_id);
-// CREATE INDEX idx_question_id ON answers (question_id);
