@@ -5,7 +5,7 @@ module.exports = async (questionId, body, date, name, email, reported, helpful, 
   console.log(photos);
   const client = createClient();
   try {
-    const query = 'INSERT INTO answers (answer_id, question_id, body, date, answerer_name, answerer_email, answer_reported, helpfulness) VALUES ((SELECT COUNT (DISTINCT answer_id) FROM answers)+1, $1, $2, $3, $4, $5, $6, $7)';
+    const query = 'INSERT INTO answers (answer_id, question_id, body, date, answerer_name, answerer_email, answer_reported, helpfulness) VALUES (uuid_generate_v4(), $1, $2, $3, $4, $5, $6, $7)';
     const values = [questionId, body, date, name, email, reported, helpful];
 
     await client.connect();
