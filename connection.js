@@ -5,7 +5,7 @@ const client = createClient();
 
 const createTablesQuery = `
   CREATE TABLE questions (
-    question_id BIGSERIAL PRIMARY KEY,
+    question_id VARCHAR(255) PRIMARY KEY,
     product_id BIGINT,
     question_body TEXT,
     question_date TIMESTAMP,
@@ -16,8 +16,8 @@ const createTablesQuery = `
   );
 
   CREATE TABLE answers (
-    answer_id BIGSERIAL PRIMARY KEY,
-    question_id BIGINT,
+    answer_id VARCHAR(255) PRIMARY KEY,
+    question_id VARCHAR(255),
     body TEXT,
     date TIMESTAMP,
     answerer_name VARCHAR(255),
@@ -28,8 +28,8 @@ const createTablesQuery = `
   );
 
   CREATE TABLE photos (
-    photo_id BIGSERIAL PRIMARY KEY,
-    answer_id BIGINT,
+    photo_id VARCHAR(255) PRIMARY KEY,
+    answer_id VARCHAR(255),
     photo_url TEXT,
     FOREIGN KEY (answer_id) REFERENCES answers(answer_id)
   );
