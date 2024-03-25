@@ -19,8 +19,19 @@ export const options = {
 // about authoring k6 scripts.
 //
 export default function () {
-  const random = Math.floor(Math.random() * 4000) + 1;
-  const res = http.get(`http://localhost:3000/qa/questions?product_id=${random}`);
+  const random = Math.floor(Math.random() * 100) + 1;
+  const requestBody = {
+    product_id: random.toString(),
+    question_body: 'Does this make my butt look big?',
+    asker_name: 'erDaddy21',
+    asker_email: 'mob@hotmail.com',
+  };
+  const res = http.post('http://localhost:3000/qa/questions', JSON.stringify(requestBody), {
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  });
+  // const res = http.get(`http://localhost:3000/qa/questions?product_id=${random}`);
   // const res = http.get(`http://localhost:3000/qa/questions/${random}/answers`);
   check(res, { 'status is 200': (r) => r.status === 200 });
   sleep(1);
