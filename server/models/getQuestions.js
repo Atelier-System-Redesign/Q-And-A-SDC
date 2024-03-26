@@ -1,24 +1,17 @@
+/* eslint-disable import/no-extraneous-dependencies */
 /* eslint-disable no-console */
+const NodeCache = require('node-cache');
 const createClient = require('../../db/database.js');
 
-module.exports = async (productId) => {
+const cache = new NodeCache();
+
+const getQuestionsFromDB = async (productId) => {
   const client = createClient();
   try {
     const query = 'SELECT * FROM questions WHERE product_id = $1 AND NOT reported';
 
     await client.connect();
     const result = await client.query(query, [productId]);
-    // const formattedData = result.rows
-    //   .filter((row) => !row.reported)
-    //   .map((row) => ({
-    //     question_id: row.question_id,
-    //     question_body: row.question_body,
-    //     question_date: row.question_date,
-    //     asker_name: row.asker_name,
-    //     asker_email: row.asker_email,
-    //     question_helpfulness: row.question_helpfulness,
-    //     reported: row.reported,
-    //   }));
 
     const responseObject = {
       product_id: productId,
@@ -32,4 +25,16 @@ module.exports = async (productId) => {
   } finally {
     client.end();
   }
+};
+
+module.exports = async (productId) => {
+  const cacheKey = `questions_${productId}`;
+  let questions = cache.get(cacheKey);
+
+  if (!questions) {
+    questions = await getQuestionsFromDB(productId);
+    cache.set(cacheKey, questions, 3600);
+  }
+
+  return questions;
 };
