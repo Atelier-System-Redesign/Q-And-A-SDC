@@ -1,7 +1,11 @@
+/* eslint-disable import/no-extraneous-dependencies */
 /* eslint-disable no-console */
+const NodeCache = require('node-cache');
 const createClient = require('../../db/database.js');
 
-module.exports = async (questionId, page, count) => {
+const cache = new NodeCache();
+
+const getAnswersFromDB = async (questionId, page, count) => {
   const client = createClient();
   try {
     const query = {
@@ -49,4 +53,15 @@ module.exports = async (questionId, page, count) => {
   } finally {
     client.end();
   }
+};
+
+module.exports = async (questionId, page, count) => {
+  const cacheKey = `answers_${questionId}`;
+  let answers = cache.get(cacheKey);
+
+  if (!answers) {
+    answers = await getAnswersFromDB(questionId, page, count);
+    cache.set(cacheKey, answers, 3600);
+  }
+  return answers;
 };
