@@ -3,14 +3,11 @@
 /* eslint-disable no-await-in-loop */
 /* eslint-disable no-restricted-syntax */
 /* eslint-disable no-console */
-// const { createClient } = require('redis');
 const createClient = require('../../db/database.js');
 
 module.exports = async (questionId, body, date, name, email, reported, helpful, photos) => {
   const client = createClient();
-  // const redisClient = createClient();
   try {
-    // const cacheKey = `${questionId}-${body}-${name}`;
     const answerQuery = 'INSERT INTO answers (answer_id, question_id, body, date, answerer_name, answerer_email, answer_reported, helpfulness) VALUES (uuid_generate_v4(), $1, $2, $3, $4, $5, $6, $7)RETURNING answer_id';
     const answerValues = [questionId, body, date, name, email, reported, helpful];
 
@@ -22,15 +19,10 @@ module.exports = async (questionId, body, date, name, email, reported, helpful, 
     }
 
     return { success: true, message: 'Answer posted successfully!' };
-    // await redisClient.connect();
-    // await redisClient.set(cacheKey, JSON.stringify(newAnswer));
-    // const cachedAnswer = await redisClient.get(cacheKey);
-    // return cachedAnswer ? JSON.parse(cachedAnswer) : newAnswer;
   } catch (error) {
     console.error('Error posting question: ', error);
     throw error;
   } finally {
     client.end();
-    // redisClient.quit();
   }
 };
