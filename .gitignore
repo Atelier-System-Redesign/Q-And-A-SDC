@@ -3,4 +3,5 @@ node_modules
 server/ETL/*.csv
 .DS_Store
 public
-.dump
+*.dump
+script.js
